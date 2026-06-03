@@ -1,6 +1,6 @@
 {
-  "name": "nicolas-config",
-  "description": "Configuración personal de Claude Code de Nicolas Monaldi",
+  "name": "claude-statusline",
+  "description": "Custom statusline plugin for Claude Code: context usage alerts, formatted token counts, session/weekly rate limits and a live subagent panel",
   "owner": {
     "name": "Nicolas Monaldi"
   },
@@ -8,7 +8,7 @@
     {
       "name": "statusline",
       "source": "./plugins/statusline",
-      "description": "Status line personalizado: modelo, contexto con alertas de color, tokens formateados, uso de sesión/semana y panel de subagentes con tok/s"
+      "description": "Custom statusline: model, context usage with color alerts, formatted token counts, session/weekly rate limit usage and a subagent panel with tok/s"
     }
   ]
 }

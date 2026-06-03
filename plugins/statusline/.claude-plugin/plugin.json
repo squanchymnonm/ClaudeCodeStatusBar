@@ -1,6 +1,6 @@
 {
   "name": "statusline",
-  "description": "Status line personalizado de Nicolas: contexto con alertas de color y emotes, tokens con separador de miles, uso de sesión/semana y filas de subagentes con velocidad de tokens",
+  "description": "Custom statusline for Claude Code: context usage with color alerts and emotes, token counts with thousands separator, session/weekly rate limit usage and subagent rows with token speed",
   "author": {
     "name": "Nicolas Monaldi"
   }
