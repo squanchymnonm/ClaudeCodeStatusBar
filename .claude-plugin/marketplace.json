@@ -1,0 +1,14 @@
+{
+  "name": "nicolas-config",
+  "description": "Configuración personal de Claude Code de Nicolas Monaldi",
+  "owner": {
+    "name": "Nicolas Monaldi"
+  },
+  "plugins": [
+    {
+      "name": "statusline",
+      "source": "./plugins/statusline",
+      "description": "Status line personalizado: modelo, contexto con alertas de color, tokens formateados, uso de sesión/semana y panel de subagentes con tok/s"
+    }
+  ]
+}
