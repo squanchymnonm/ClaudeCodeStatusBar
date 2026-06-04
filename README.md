@@ -30,7 +30,7 @@ A custom **statusline plugin for Claude Code** with context usage alerts, format
 
 2. The subagent panel is enabled automatically (the plugin ships it in its `settings.json`).
 
-3. The main status line cannot be enabled from a plugin, so a `SessionStart` hook copies the script to `~/.claude/statusline-command.sh` on every session. You just need to register it **once** in `~/.claude/settings.json`:
+3. The main status line cannot be enabled from a plugin, so a `SessionStart` hook installs the script at `~/.claude/statusline-command.sh` on every session. The install is **non-destructive**: if you already have your own script at that path, the plugin will never overwrite it (move or delete it first if you want the plugin's status line). You just need to register it **once** in `~/.claude/settings.json`:
 
    ```json
    {
@@ -80,7 +80,7 @@ Plugin de **statusline para Claude Code** con alertas de uso de contexto, tokens
 
 2. El panel de subagentes queda activo automáticamente.
 
-3. Registrar el status line principal **una vez** en `~/.claude/settings.json` (un hook de `SessionStart` copia el script a `~/.claude/statusline-command.sh` en cada sesión):
+3. Registrar el status line principal **una vez** en `~/.claude/settings.json` (un hook de `SessionStart` instala el script en `~/.claude/statusline-command.sh` en cada sesión; la instalación es **no destructiva**: si ya tenés un script propio ahí, el plugin nunca lo pisa):
 
    ```json
    {

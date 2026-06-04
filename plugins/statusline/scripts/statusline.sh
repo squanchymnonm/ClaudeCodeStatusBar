@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# managed-by-plugin: statusline@claude-statusline — no editar a mano, se actualiza en cada SessionStart
+command -v jq >/dev/null 2>&1 || { printf 'statusline: falta jq (brew install jq)'; exit 0; }
 input=$(cat)
 
 model=$(echo "$input" | jq -r '.model.display_name // "Unknown"')
