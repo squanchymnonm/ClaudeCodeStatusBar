@@ -12,7 +12,27 @@ total_tokens=$((total_input + total_output))
 total_tokens_fmt=$(echo "$total_tokens" | rev | sed -E 's/([0-9]{3})/\1./g' | rev | sed 's/^\.//')
 
 five_hour=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
+five_hour_reset=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // .rate_limits.five_hour.reset_at // empty')
 seven_day=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
+
+# Calcula cuánto falta para un resets_at (epoch s, epoch ms o ISO 8601) -> "2h 5m" / "8m"
+fmt_reset() {
+    local raw=$1 epoch now diff
+    case "$raw" in
+        ''|null) return ;;
+        *[!0-9]*) epoch=$(date -d "$raw" +%s 2>/dev/null) ;;
+        *) [ "$raw" -gt 100000000000 ] 2>/dev/null && epoch=$((raw / 1000)) || epoch=$raw ;;
+    esac
+    [ -z "$epoch" ] && return
+    now=$(date +%s)
+    diff=$((epoch - now))
+    [ "$diff" -le 0 ] && { printf '0m'; return; }
+    if [ "$diff" -ge 3600 ]; then
+        printf '%dh %dm' $((diff / 3600)) $(((diff % 3600) / 60))
+    else
+        printf '%dm' $(((diff + 59) / 60))
+    fi
+}
 
 RED=$'\033[31m'
 YELLOW=$'\033[33m'
@@ -49,6 +69,8 @@ output="$output | tokens: $total_tokens_fmt"
 if [ -n "$five_hour" ]; then
     session_int=$(printf "%.0f" "$five_hour")
     output="$output | session: $(colorize_pct "$session_int")"
+    reset_left=$(fmt_reset "$five_hour_reset")
+    [ -n "$reset_left" ] && output="$output 🔄 $reset_left"
 fi
 
 if [ -n "$seven_day" ]; then
